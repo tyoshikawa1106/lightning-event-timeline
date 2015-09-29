@@ -1,0 +1,20 @@
+.THIS .application-header {
+  background-color: #0070d2;
+  color: #FFF;
+}
+
+.THIS .page-title {
+  background-color: #FFF !important;
+  box-shadow: 1px 2px 10px rgba(0,0,0,0.4);
+}
+
+.THIS.fiexd {
+  position: fixed;
+  z-index: 999;
+  width: 100%;
+}
+
+.THIS .header-button {
+  color: #A7B8B1;
+  font-size: 0.8rem;
+}

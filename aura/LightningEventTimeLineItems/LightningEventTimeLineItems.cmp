@@ -1,0 +1,10 @@
+<aura:component >
+  <!-- attribute -->
+  <aura:attribute name="events" type="Event[]" />
+  <!-- component -->
+  <ul class="slds-timeline timeline-back-color">
+    <aura:iteration items="{!v.events}" var="event">
+      <c:LightningEventTimeLineItem event="{!event}" />
+    </aura:iteration>
+  </ul>
+</aura:component>

@@ -1,0 +1,17 @@
+<aura:component>
+  <!-- attribute -->
+  <aura:attribute name="eventsByAll" type="Event[]" />
+  <aura:attribute name="eventsByMonday" type="Event[]" />
+  <aura:attribute name="eventsByTuesday" type="Event[]" />
+  <aura:attribute name="eventsByWednesday" type="Event[]" />
+  <aura:attribute name="eventsByThursday" type="Event[]" />
+  <aura:attribute name="eventsByFriday" type="Event[]" />
+  <aura:attribute name="eventsBySaturday" type="Event[]" />
+  <aura:attribute name="eventsBySunday" type="Event[]" />
+  <!-- require -->
+  <ltng:require scripts="/resource/EventTimeLineLibrary/ChartJs/Chart.js" afterScriptsLoaded="{!c.setup}"/>
+  <!-- component -->
+  <div aura:id="aura-cmp">
+      <canvas aura:id="chart" id="{!globalId + '_myChart'}" width="400" height="400"/>
+  </div>
+</aura:component>

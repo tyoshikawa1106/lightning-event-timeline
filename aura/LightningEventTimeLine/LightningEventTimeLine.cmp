@@ -1,0 +1,105 @@
+<aura:component controller="EventTimeLineController" implements="force:appHostable,flexipage:availableForAllPageTypes">
+  <!-- attribute -->
+  <aura:attribute name="eventsByAll" type="Event[]" />
+  <aura:attribute name="eventsByMonday" type="Event[]" />
+  <aura:attribute name="eventsByTuesday" type="Event[]" />
+  <aura:attribute name="eventsByWednesday" type="Event[]" />
+  <aura:attribute name="eventsByThursday" type="Event[]" />
+  <aura:attribute name="eventsByFriday" type="Event[]" />
+  <aura:attribute name="eventsBySaturday" type="Event[]" />
+  <aura:attribute name="eventsBySunday" type="Event[]" />
+  <aura:attribute name="isViewGraph" type="Boolean" default="false" />
+  <!-- handler -->
+  <aura:handler name="init" action="{!c.init}" value="{!this}" />
+  <!-- lightning event -->
+  <aura:handler event="c:LightningEventTimeLineRefreshEvt" action="{!c.init}"/>
+  <!-- require -->
+  <ltng:require styles="/resource/SLDS091/assets/styles/salesforce-lightning-design-system.css" />
+  <!-- component -->
+  <div class="slds">
+    <div class="slds-grid slds-wrap slds-p-horizontal--small">
+      <nav class="slds-col slds-size--1-of-1">
+        <div class="slds-tabs--default">
+          <!-- Tab Menu -->
+          <ul class="slds-tabs--default__nav" role="tablist">
+            <li class="slds-tabs__item slds-text-heading--label slds-active" title="Item One" role="presentation" aura:id="tab-all">
+              <a href="#" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-all" onclick="{!c.clickTabAll}">All</a>
+            </li>
+            <li class="slds-tabs__item slds-text-heading--label" title="Item Three" role="presentation" aura:id="tab-sun">
+              <a href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-sun" onclick="{!c.clickTabSun}">Sun</a>
+            </li>
+            <li class="slds-tabs__item slds-text-heading--label" title="Item Two" role="presentation" aura:id="tab-mon">
+              <a href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-mon" onclick="{!c.clickTabMon}">Mon</a>
+            </li>
+            <li class="slds-tabs__item slds-text-heading--label" title="Item Three" role="presentation" aura:id="tab-tue">
+              <a href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-tue" onclick="{!c.clickTabTue}">Tue</a>
+            </li>
+            <li class="slds-tabs__item slds-text-heading--label" title="Item Three" role="presentation" aura:id="tab-wed">
+              <a href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-wed" onclick="{!c.clickTabWed}">Wed</a>
+            </li>
+            <li class="slds-tabs__item slds-text-heading--label" title="Item Three" role="presentation" aura:id="tab-thu">
+              <a href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-thu" onclick="{!c.clickTabThu}">Thu</a>
+            </li>
+            <li class="slds-tabs__item slds-text-heading--label" title="Item Three" role="presentation" aura:id="tab-fri">
+              <a href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-fri" onclick="{!c.clickTabFri}">Fri</a>
+            </li>
+            <li class="slds-tabs__item slds-text-heading--label" title="Item Three" role="presentation" aura:id="tab-sat">
+              <a href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-sat" onclick="{!c.clickTabSat}">Sat</a>
+            </li>
+            <li class="slds-tabs__item slds-text-heading--label" title="Item Three" role="presentation" aura:id="tab-graph">
+              <a href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-graph" onclick="{!c.clickTabGraph}">[ Graph ]</a>
+            </li>
+          </ul>
+          <!-- Content -->
+          <div id="tab-all" class="slds-tabs__content slds-show" role="tabpanel" aura:id="content-all">
+            <h2 class="slds-text-heading--small slds-m-bottom--small slds-text-align--center">All ( {!v.eventsByAll.length} )</h2>
+            <c:LightningEventTimeLineItems events="{!v.eventsByAll}" />
+          </div>
+          <div id="tab-sun" class="slds-tabs__content slds-hide" role="tabpanel" aura:id="content-sun">
+            <h2 class="slds-text-heading--small slds-m-bottom--small slds-text-align--center">Sunday ( {!v.eventsBySunday.length} )</h2>
+            <c:LightningEventTimeLineItems events="{!v.eventsBySunday}" />
+          </div>
+          <div id="tab-mon" class="slds-tabs__content slds-hide" role="tabpanel" aura:id="content-mon">
+            <h2 class="slds-text-heading--small slds-m-bottom--small slds-text-align--center">Monday ( {!v.eventsByMonday.length} )</h2>
+            <c:LightningEventTimeLineItems events="{!v.eventsByMonday}" />
+          </div>
+          <div id="tab-tue" class="slds-tabs__content slds-hide" role="tabpanel" aura:id="content-tue">
+            <h2 class="slds-text-heading--small slds-m-bottom--small slds-text-align--center">Tuesday ( {!v.eventsByTuesday.length} )</h2>
+            <c:LightningEventTimeLineItems events="{!v.eventsByTuesday}" />
+          </div>
+          <div id="tab-wed" class="slds-tabs__content slds-hide" role="tabpanel" aura:id="content-wed">
+            <h2 class="slds-text-heading--small slds-m-bottom--small slds-text-align--center">Wednesday ( {!v.eventsByWednesday.length} )</h2>
+            <c:LightningEventTimeLineItems events="{!v.eventsByWednesday}" />
+          </div>
+          <div id="tab-thu" class="slds-tabs__content slds-hide" role="tabpanel" aura:id="content-thu">
+            <h2 class="slds-text-heading--small slds-m-bottom--small slds-text-align--center">Thursday ( {!v.eventsByThursday.length} )</h2>
+            <c:LightningEventTimeLineItems events="{!v.eventsByThursday}" />
+          </div>
+          <div id="tab-fri" class="slds-tabs__content slds-hide" role="tabpanel" aura:id="content-fri">
+            <h2 class="slds-text-heading--small slds-m-bottom--small slds-text-align--center">Friday ( {!v.eventsByFriday.length} )</h2>
+            <c:LightningEventTimeLineItems events="{!v.eventsByFriday}" />
+          </div>
+          <div id="tab-sat" class="slds-tabs__content slds-hide" role="tabpanel" aura:id="content-sat">
+            <h2 class="slds-text-heading--small slds-m-bottom--small slds-text-align--center">Saturday ( {!v.eventsBySaturday.length} )</h2>
+            <c:LightningEventTimeLineItems events="{!v.eventsBySaturday}" />
+          </div>
+          <div id="tab-graph" class="slds-tabs__content slds-hide" role="tabpanel" aura:id="content-graph">
+            <h2 class="slds-text-heading--small slds-m-bottom--small slds-text-align--center">[ Graph ]</h2>
+            <aura:if isTrue="{!v.isViewGraph}">
+              <c:LightningEventTimeLineGraph
+                eventsByAll="{!v.eventsByAll}"
+                eventsByMonday="{!v.eventsByMonday}"
+                eventsByTuesday="{!v.eventsByTuesday}"
+                eventsByWednesday="{!v.eventsByWednesday}"
+                eventsByThursday="{!v.eventsByThursday}"
+                eventsByFriday="{!v.eventsByFriday}"
+                eventsBySaturday="{!v.eventsBySaturday}"
+                eventsBySunday="{!v.eventsBySunday}"
+              />
+            </aura:if>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </div>
+</aura:component>

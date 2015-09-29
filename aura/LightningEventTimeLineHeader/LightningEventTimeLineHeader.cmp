@@ -1,0 +1,85 @@
+<aura:component controller="EventTimeLineController" implements="force:appHostable">
+  <!-- attribute -->
+  <aura:attribute name="subject" type="String" />
+  <aura:attribute name="location" type="String" />
+  <aura:attribute name="description" type="String" />
+  <!-- lighitng event -->
+  <aura:registerEvent name="refreshEvents" type="c:LightningEventTimeLineRefreshEvt" />
+  <!-- require -->
+  <ltng:require styles="/resource/SLDS091/assets/styles/salesforce-lightning-design-system.css" />
+  <!-- component -->
+  <header class="fiexd">
+    <div class="slds">
+      <div class="slds-page-header slds-text-heading--medium application-header">
+        <h1>Salesforce Platform</h1>
+      </div>
+      <div class="slds-page-header slds-text-heading--medium page-title slds-clearfix">
+        <div class="slds-media slds-tile slds-float--left">
+          <div class="slds-media__figure">
+            <span aura:id="svg_title_icon">
+              <![CDATA[
+                <svg aria-hidden="true" class="slds-icon slds-icon-standard-today slds-icon--medium">
+                  <use xlink:href="/resource/SLDS091/assets/icons/custom-sprite/svg/symbols.svg#custom25"></use>
+                </svg>
+              ]]>
+            </span>
+          </div>
+          <div class="slds-media__body">
+            <h2>今週の予定</h2>
+          </div>
+        </div>
+        <div class="slds-float--right">
+          <button class="slds-button slds-button--inverse header-button" onclick="{!c.openNewFormModal}">New Event</button>
+        </div>
+      </div>
+    </div>
+  </header>
+  <!-- Modal -->
+  <div aura:id="form-modal" class="slds-hide">
+    <div aria-hidden="false" role="dialog" class="slds-modal slds-modal--large slds-fade-in-open">
+      <div class="slds-modal__container slds-modal--large">
+        <div class="slds-modal__header">
+          <h2 class="slds-text-heading--medium">Event Edit</h2>
+          <button class="slds-button slds-modal__close" onclick="{!c.closeNewFormModal}">
+            <span aura:id="svg_close_icon">
+              <![CDATA[
+              <svg aria-hidden="true" class="slds-button__icon slds-button__icon--inverse slds-button__icon--large">
+                <use xlink:href="/resource/SLDS091/assets/icons/action-sprite/svg/symbols.svg#close"></use>
+              </svg>
+              ]]>
+            </span>
+            <span class="slds-assistive-text">Close</span>
+          </button>
+        </div>
+        <div class="slds-modal__content">
+          <div class="slds-lookup" data-select="multi" data-scope="single" data-typeahead="true">
+            <div class="slds-form-element slds-m-bottom--small">
+              <label class="slds-form-element__label">Subject</label>
+              <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
+                <ui:inputText value="{!v.subject}" class="slds-input" />
+              </div>
+              <label class="slds-form-element__label">Location</label>
+              <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
+                <ui:inputText value="{!v.location}" class="slds-input" />
+              </div>
+              <label class="slds-form-element__label">Description</label>
+              <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
+                <ui:inputTextArea value="{!v.description}" class="slds-input" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="slds-modal__footer slds-modal__footer--directional">
+          <button class="slds-button slds-button--neutral" onclick="{!c.closeNewFormModal}">Cancel</button>
+          <button class="slds-button slds-button--neutral" onclick="{!c.saveEvent}">Save</button>
+        </div>
+      </div>
+    </div>
+    <div class="slds-modal-backdrop slds-modal-backdrop--open"></div>
+    <!-- Loading Modal -->
+    <div aura:id="loading-modal" class="slds-hide">
+      <div aria-hidden="false" role="dialog" class="slds-modal slds-modal--large slds-fade-in-open">
+      </div>
+    </div>
+  </div>
+</aura:component>

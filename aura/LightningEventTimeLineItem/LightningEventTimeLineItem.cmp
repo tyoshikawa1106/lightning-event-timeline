@@ -1,0 +1,139 @@
+<aura:component controller="EventTimeLineController">
+  <!-- attribute -->
+  <aura:attribute name="event" type="Event" />
+  <!-- lighitng event -->
+  <aura:registerEvent name="refreshEvents" type="c:LightningEventTimeLineRefreshEvt" />
+  <!-- component -->
+    <li class="slds-timeline__item li-mark">
+      <span class="slds-assistive-text">Event</span>
+      <div class="slds-media slds-media--reverse">
+        <div class="slds-media__figure">
+          <div class="slds-timeline__actions">
+            <p class="font-bold">
+              <ui:outputText value="{!v.event.DayOfWeekByStart__c}" />
+            </p>
+            <div class="slds-dropdown-trigger">
+              <button class="slds-button slds-button--icon-border-filled" aria-haspopup="true">
+                <!-- Dropdown -->
+                <span aura:id="svg_time_line_selectbox">
+                  <![CDATA[
+                  <svg aria-hidden="true" class="slds-button__icon">
+                    <use xlink:href="/resource/SLDS091/assets/icons/utility-sprite/svg/symbols.svg#switch"></use>
+                  </svg>
+                  ]]>
+                </span>
+                <span class="slds-assistive-text">Show More</span>
+              </button>
+              <div class="slds-dropdown slds-dropdown--right slds-dropdown--actions slds-dropdown--menu">
+                <ul class="slds-dropdown__list" role="menu">
+                  <li id="menu-13-0" href="#" class="slds-dropdown__item">
+                    <a href="#" class="slds-truncate" role="menuitem" onclick="{!c.openEditFormModal}">Edit</a>
+                  </li>
+                  <li id="menu-14-1" href="#" class="slds-dropdown__item">
+                    <a href="#" class="slds-truncate" role="menuitem" onclick="{!c.deleteEvent}">Delete</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="slds-media__body">
+          <div class="slds-media slds-media--timeline slds-timeline__media--event">
+            <div class="slds-media__figure">
+              <!-- image -->
+              <span aura:id="svg_time_line_icon">
+                <![CDATA[
+                <svg aria-hidden="true" class="slds-icon slds-icon-standard-event slds-timeline__icon">
+                  <use xlink:href="/resource/SLDS091/assets/icons/standard-sprite/svg/symbols.svg#event"></use>
+                </svg>
+                ]]>
+              </span>
+            </div>
+            <div class="slds-media__body font-bold">
+              <p>
+                <a href="#">
+                  <ui:outputText value="{!v.event.Subject}" />
+                </a>
+              </p>
+              <p class="slds-truncate">
+                <ui:outputText value="{!v.event.Description}" />
+              </p>
+              <ul class="slds-list--horizontal slds-text-body--small">
+                <li class="slds-list__item slds-m-right--large">
+                  <dl class="slds-dl--inline">
+                    <dt class="slds-dl--inline__label">Date:</dt>
+                    <dd class="slds-dl--inline__detail">
+                      <a href="#">
+                        <ui:outputText value="{!v.event.ActivityDate}" />
+                      </a>
+                    </dd>
+                  </dl>
+                </li>
+                <li class="slds-list__item">
+                  <dl class="slds-dl--inline">
+                    <dt class="slds-dl--inline__label">Location:</dt>
+                    <dd class="slds-dl--inline__detail">
+                      <a href="#">
+                        <ui:outputText value="{!v.event.Location}" />
+                      </a>
+                    </dd>
+                  </dl>
+                </li>
+              </ul>
+              <dl class="slds-dl--inline slds-text-body--small">
+                <dt class="slds-dl--inline__label">Owner:</dt>
+                <dd class="slds-dl--inline__detail">
+                  <a href="#">
+                    <ui:outputText value="{!v.event.Owner.Name}" />
+                  </a>
+                </dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+    <!-- Modal -->
+    <div aura:id="form-modal" class="slds-hide">
+      <div aria-hidden="false" role="dialog" class="slds-modal slds-modal--large slds-fade-in-open">
+        <div class="slds-modal__container slds-modal--large">
+          <div class="slds-modal__header">
+            <h2 class="slds-text-heading--medium">Event Edit</h2>
+            <button class="slds-button slds-modal__close" onclick="{!c.closeEditFormModal}">
+              <span aura:id="svg_close_icon">
+                <![CDATA[
+                <svg aria-hidden="true" class="slds-button__icon slds-button__icon--inverse slds-button__icon--large">
+                  <use xlink:href="/resource/SLDS091/assets/icons/action-sprite/svg/symbols.svg#close"></use>
+                </svg>
+                ]]>
+              </span>
+              <span class="slds-assistive-text">Close</span>
+            </button>
+          </div>
+          <div class="slds-modal__content">
+            <div class="slds-lookup" data-select="multi" data-scope="single" data-typeahead="true">
+              <div class="slds-form-element slds-m-bottom--small">
+                <label class="slds-form-element__label">Subject</label>
+                <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
+                  <ui:inputText value="{!v.event.Subject}" class="slds-input" aura:id="subject" />
+                </div>
+                <label class="slds-form-element__label">Location</label>
+                <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
+                  <ui:inputText value="{!v.event.Location}" class="slds-input" aura:id="location" />
+                </div>
+                <label class="slds-form-element__label">Description</label>
+                <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
+                  <ui:inputTextArea value="{!v.event.Description}" class="slds-input" aura:id="description" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="slds-modal__footer slds-modal__footer--directional">
+            <button class="slds-button slds-button--neutral" onclick="{!c.closeEditFormModal}">Cancel</button>
+            <button class="slds-button slds-button--neutral" onclick="{!c.saveEvent}">Save</button>
+          </div>
+        </div>
+      </div>
+      <div class="slds-modal-backdrop slds-modal-backdrop--open"></div>
+    </div>
+</aura:component>
